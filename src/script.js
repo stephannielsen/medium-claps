@@ -4,76 +4,30 @@
 
     $.getJSON('http://allorigins.me/get?url=https://medium.com/@stephannielsen/has-recommended&callback=?', function(data) {
         console.log($.parseHTML(data.contents));
-        // filterArticles($.parseHTML(data.contents));
+        var root = $.parseHTML(data.contents).filter(e => e.id === 'root')[0];
+        var section = $(root).find("section")[0];
+        var container = $(section).children()[1];
+        var posts = $(container).children().first().children().toArray();
+        posts.shift(); //hei we got all the posts on the page
+
+        posts.forEach(p => {
+            //each post is wrapped in a div, so traverse one down first
+            p = $(p).find("div").first()[0];
+            var tmp = $(p).children().toArray();
+            var authorInfo = tmp[0];
+            var postInfo = tmp[1];
+            var post = {
+                authorImage: $(authorInfo).find("img")[0].src,
+                authorLink: $(authorInfo).find("a")[0].href,
+                authorName: $(authorInfo).find("span").first().find("a")[0].innerHTML,
+                postImage: $(postInfo).find("img")[0].src,
+                postLink: $(postInfo)[0].href,
+                postTitle: $(postInfo).find("h1")[0].innerHTML
+            }
+            var stats = tmp[2];
+            console.log(post);
+        });
     });
 
-    // fetch('https://allorigins.me/get?method=raw&url=' + encodeURIComponent('https://medium.com/@stephannielsen/has-recommended') + '&callback=?', {
-    //         method: "GET",
-    //         mode: "no-cors",
-    //         credentials: "same-origin",
-    //         cache: "no-cache",
-    //         redirect: "follow",
-    //         referrer: "no-referrer"
-    //     })
-    //     .then(function(response) {
-    //         return response.text();
-    //     }) 
-    //     .then(function(body) {
-    //         filterArticles($.parseHTML(body))
-    //     });
-
-    // var filterArticles = function(html) {
-    //     var $root = $(html.filter(function(element) { return element.id === 'root'; })[0]
-    //         .children[0]
-    //         .children[0]
-    //         .children[1] //section
-    //         .children[0]
-    //         .children[1]); //container
-    //     var author = $root[0]
-    //         .children[0]
-    //         .children[0]
-    //         .children[0]
-    //         .children[0]
-    //         .children[0] //s ct ei
-    //         .children[0]
-    //         .children[0]; //<a> with author link
-    //     var authorLink = author[0].href;
-    //     var authorName =
-    //         var post = $root[0]
-    //             .children[0]
-    //             .children[1]; //<a> with post link
-    //     var all = getLinks($root[0]);
-    //     links.forEach(function(element) { console.log(element) });
-    //     // var children = root.children;
-    //     // children
-    //     //     .filter(function(element) { return element.nodeName === 'a'; })
-    //     //     .forEach(function(element) { console.log(element) });
-    //     // var links = html.filter(node => node.no)
-    // }
-
-    // var beginWith = "/p/";
-
-    // function getLinks(element) {
-    //     var links = [];
-    //     if (element.href && element.href.startsWith(beginWith))
-    //         return element;
-    //     element.children.forEach(function(chil d) {
-    //         links.push(getLinks(child));
-    //         links = links.concat(getLinks(child));
-    //     })
-    //     return links;
-    // }
-
-    // function getLinks(element) {
-    //     var links = [];
-    //     var beginWith =
-    //     root.children.filter(categories, function(c) {
-    //         return c["parent_id"] === id;
-    //     }).forEach(function(c) {
-    //         children.push(c);
-    //         children = children.concat(getChildren(c.category_id, categories));
-    //     })
-
-    //     return children;
-    // }
+    //div#root > div > section > 2nd div > div > 2nd div
 })();

@@ -4,7 +4,6 @@
     const mediumUrl = "https://medium.com"
 
     $.getJSON('http://allorigins.me/get?url=https://medium.com/@stephannielsen/has-recommended&callback=?', function(data) {
-        console.log($.parseHTML(data.contents));
         var root = $.parseHTML(data.contents).filter(e => e.id === 'root')[0];
         var section = $(root).find("section")[0];
         var container = $(section).children()[1];

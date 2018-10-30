@@ -1,4 +1,4 @@
-# Medium Collapse
+# Medium Claps
 
 Scrapes a medium profile page for the posts a user has recommended with claps.
 

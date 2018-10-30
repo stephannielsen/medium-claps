@@ -3,6 +3,18 @@
 
     const mediumUrl = "https://medium.com"
 
+    // let parser = new RSSParser();
+    // parser.parseURL("https://cors-anywhere.herokuapp.com/https://medium.com/feed/@stephannielsen/has-recommended", function(err, feed) {
+    //     console.log(feed);
+    //     feed.items.forEach(function(entry) {
+    //         var postImage = $.parseHTML(entry["content:encoded"]);
+    //         console.log(postImage);
+    //         // var tmp = $.parseHTML(entry["content:encoded"]).filter(e => e.localName === "figure")[0];
+    //         // entry.postImage = tmp.children[0].src;
+    //         // console.log(entry.title + ':' + entry.link + ":" + entry.postImage);
+    //     })
+    // })
+
     $.getJSON('http://allorigins.me/get?url=https://medium.com/@stephannielsen/has-recommended&callback=?', function(data) {
         var root = $.parseHTML(data.contents).filter(e => e.id === 'root')[0];
         var section = $(root).find("section")[0];

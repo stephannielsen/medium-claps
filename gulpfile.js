@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var inject = require('gulp-inject');
+var series = require('stream-series');
 var log = require('fancy-log');
 var del = require('del');
 var webserver = require('gulp-webserver');
@@ -20,11 +21,13 @@ var paths = {
     tmpIndex: 'tmp/index.html',
     tmpCSS: 'tmp/**/*.css',
     tmpJS: 'tmp/**/*.js',
+    tmpJQuery: 'tmp/**/jquery.js',
 
     dist: 'dist',
     distIndex: 'dist/index.html',
     distCSS: 'dist/**/*.css',
-    distJS: 'dist/**/*.js'
+    distJS: 'dist/**/*.js',
+    distJQuery: 'tmp/**/jquery.min.js'
 };
 
 //global tasks
@@ -35,7 +38,7 @@ gulp.task('clean', function(done) {
 });
 
 gulp.task('vendor', function() {
-    return gulp.src("./node_modules/jquery/dist/jquery.js")
+    return gulp.src(["./node_modules/jquery/dist/jquery.js", "./node_modules/rss-parser/dist/rss-parser.js"])
         .pipe(gulp.dest(paths.tmp));
 });
 
@@ -61,10 +64,11 @@ gulp.task('copy', gulp.series(['clean', 'vendor', 'html', 'css', 'js']));
 
 gulp.task('inject', gulp.series(['copy'], function() {
     var css = gulp.src(paths.tmpCSS, { read: false });
+    var jquery = gulp.src(paths.tmpJQuery, { read: false });
     var js = gulp.src(paths.tmpJS, { read: false });
     return gulp.src(paths.tmpIndex)
         .pipe(inject(css, { relative: true }))
-        .pipe(inject(js, { relative: true }))
+        .pipe(inject(series(jquery, js), { relative: true }))
         .pipe(gulp.dest(paths.tmp));
 }));
 
@@ -122,9 +126,10 @@ gulp.task('copy:dist', gulp.series(['clean:dist', 'vendor:dist', 'html:dist', 'c
 gulp.task('inject:dist', gulp.series(['copy:dist'], function() {
     var css = gulp.src(paths.distCSS, { read: false });
     var js = gulp.src(paths.distJS, { read: false });
+    var jquery = gulp.src(paths.distJQuery, { read: false })
     return gulp.src(paths.distIndex)
         .pipe(inject(css, { relative: true }))
-        .pipe(inject(js, { relative: true }))
+        .pipe(inject(series(jquery, js), { relative: true }))
         .pipe(gulp.dest(paths.dist));
 }));
 

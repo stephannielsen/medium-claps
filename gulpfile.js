@@ -106,7 +106,7 @@ gulp.task('html:dist', function() {
 
 gulp.task('css:dist', function() {
     return gulp.src(paths.srcCSS)
-        .pipe(concat('style.min.css'))
+        .pipe(concat('medium-claps.min.css'))
         .pipe(cleanCSS())
         .pipe(gulp.dest(paths.dist));
 });
@@ -116,7 +116,7 @@ gulp.task('js:dist', function() {
         .pipe(babel({
             presets: ['@babel/env']
         }))
-        .pipe(concat('script.min.js'))
+        .pipe(concat('medium-claps.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(paths.dist));
 });

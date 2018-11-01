@@ -10,37 +10,23 @@
 </head>
 
 <body>
-    <!-- <div class="awesome">This is awesome!!!!</div> -->
-
-    <div class="post">
-        <div class="post-details">
-            <div class="post-image"></div>
-            <div class="post-title">
-                <h2>Facebook Is Screwing Future Generations</h2>
-            </div>
-            <div class="post-author">
-                <p>by Scott Galloway</p>
-            </div>
+    <div class="root">
+        <div class="claps-container">
+            <a href="{{postLink}}" class="post">
+                <div class="post-container">
+                    <div class="post-details">
+                        <div class="post-image" style="background: linear-gradient(transparent, transparent, transparent, #fff), url({{postImage}}) no-repeat center/cover;">
+                        </div>
+                        <div class="post-title">
+                            <h2>{{postTitle}}</h2>
+                        </div>
+                        <div class="post-author">
+                            <p>by {{postAuthor}}</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
-    </div>
-
-    <!-- Controllers-->
-    <div class="controller-container">
-        <span class="controller" id="big">BIG CARD</span>
-        <span class="controller" id="medium">MEDIUM CARD</span>
-        <span class="controller is_current" id="small">SMALL CARD</span>
-    </div>
-
-    <!-- Cards-->
-    <div class="card card--small">
-        <div class="card__image" style="background-image: url(https://placeimg.com/640/480/nature);"></div>
-        <h2 class="card__title">Kangaroo Valley Safari</h2>
-        <span class="card__subtitle">By Mattia Astorino</span>
-        <!-- <p class="card__text">Located two hours south of Sydney in the Southern Highland of New South Wales...</p> -->
-        <!-- <div class="card__action-bar">
-            <button class="card__button">SHARE</button>
-            <button class="card__button">READ MORE</button>
-        </div> -->
     </div>
     <!--[htmlclean-protect]-->
     <!-- inject:jquery -->

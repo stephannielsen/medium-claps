@@ -18,7 +18,7 @@
     let placeholder = $('.claps-container .post').prop('outerHTML');
     $('.claps-container .post').remove();
 
-    $.getJSON('http://allorigins.me/get?url=https://medium.com/@stephannielsen/has-recommended&callback=?', function(data) {
+    $.getJSON('https://allorigins.me/get?url=https://medium.com/@stephannielsen/has-recommended&callback=?', function(data) {
         let root = $.parseHTML(data.contents).filter(e => e.id === 'root')[0];
         let section = $(root).find("section")[0];
         let container = $(section).children()[1];
@@ -45,7 +45,7 @@
                 .replace('{{postLink}}', post.postLink)
                 .replace('{{postTitle}}', post.postTitle)
                 .replace('{{postAuthor}}', post.authorName)
-                .replace('{{postImage}}', post.postImage);
+                .replace('https://source.unsplash.com/random/640x480', post.postImage);
             $(newPost).hide().appendTo('.claps-container').show('slow');
             // let stats = tmp[2];
         });

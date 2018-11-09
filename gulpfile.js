@@ -12,22 +12,26 @@ var uglify = require('gulp-uglify');
 
 
 var paths = {
-    src: 'src/**/*',
-    srcHTML: 'src/**/*.html',
-    srcCSS: 'src/**/*.css',
-    srcJS: 'src/**/*.js',
+    src: 'src/*',
+    srcHTML: 'src/*.html',
+    srcCSS: 'src/*.css',
+    srcJS: 'src/*.js',
 
     tmp: 'tmp',
+    tmpVendor: 'tmp/vendor',
     tmpIndex: 'tmp/index.html',
-    tmpCSS: 'tmp/**/*.css',
-    tmpJS: 'tmp/**/*.js',
-    tmpJQuery: 'tmp/**/jquery.js',
+    tmpCSS: 'tmp/*.css',
+    tmpJS: 'tmp/*.js',
+    tmpJQuery: 'tmp/vendor/jquery.js',
+    tmpRssParser: 'tmp/vendor/rss-parser.js',
 
     dist: 'dist',
+    distVendor: 'dist/vendor',
     distIndex: 'dist/index.html',
-    distCSS: 'dist/**/*.css',
-    distJS: 'dist/**/*.js',
-    distJQuery: 'tmp/**/jquery.min.js'
+    distCSS: 'dist/*.css',
+    distJS: 'dist/*.js',
+    distJQuery: 'dist/vendor/jquery.min.js',
+    distRssParser: 'dist/vendor/rss-parser.min.js',
 };
 
 //global tasks
@@ -39,7 +43,7 @@ gulp.task('clean', function(done) {
 
 gulp.task('vendor', function() {
     return gulp.src(["./node_modules/jquery/dist/jquery.js", "./node_modules/rss-parser/dist/rss-parser.js"])
-        .pipe(gulp.dest(paths.tmp));
+        .pipe(gulp.dest(paths.tmpVendor));
 });
 
 gulp.task('html', function() {
@@ -65,10 +69,11 @@ gulp.task('copy', gulp.series(['clean', 'vendor', 'html', 'css', 'js']));
 gulp.task('inject', gulp.series(['copy'], function() {
     var css = gulp.src(paths.tmpCSS, { read: false });
     var jquery = gulp.src(paths.tmpJQuery, { read: false });
+    var rssParser = gulp.src(paths.tmpRssParser, { read: false });
     var js = gulp.src(paths.tmpJS, { read: false });
     return gulp.src(paths.tmpIndex)
         .pipe(inject(css, { relative: true }))
-        .pipe(inject(series(jquery, js), { relative: true }))
+        .pipe(inject(series(jquery, rssParser, js), { relative: true }))
         .pipe(gulp.dest(paths.tmp));
 }));
 
@@ -94,8 +99,8 @@ gulp.task('clean:dist', function(done) {
 });
 
 gulp.task('vendor:dist', function() {
-    return gulp.src("./node_modules/jquery/dist/jquery.min.js")
-        .pipe(gulp.dest(paths.dist));
+    return gulp.src(["./node_modules/jquery/dist/jquery.min.js", "./node_modules/rss-parser/dist/rss-parser.min.js"])
+        .pipe(gulp.dest(paths.distVendor));
 });
 
 gulp.task('html:dist', function() {
@@ -127,9 +132,10 @@ gulp.task('inject:dist', gulp.series(['copy:dist'], function() {
     var css = gulp.src(paths.distCSS, { read: false });
     var js = gulp.src(paths.distJS, { read: false });
     var jquery = gulp.src(paths.distJQuery, { read: false })
+    var rssParser = gulp.src(paths.distRssParser, { read: false })
     return gulp.src(paths.distIndex)
         .pipe(inject(css, { relative: true }))
-        .pipe(inject(series(jquery, js), { relative: true }))
+        .pipe(inject(series(jquery, rssParser, js), { relative: true }))
         .pipe(gulp.dest(paths.dist));
 }));
 

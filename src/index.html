@@ -34,6 +34,21 @@
     <!-- inject:js -->
     <!-- endinject -->
     <!--[/htmlclean-protect]-->
+    <script type="text/javascript">
+        new MediumClaps({
+            username: 'stephannielsen',
+            useRss: true,
+            root: '.claps-container',
+            placeholders: {
+                templateElement: '.claps-container .post',
+                template: $('.claps-container .post').prop('outerHTML'),
+                postLink: '{{postLink}}',
+                postTitle: '{{postTitle}}',
+                authorName: '{{postAuthor}}',
+                postImage: 'https://source.unsplash.com/random/640x480'
+            }
+        });
+    </script>
 </body>
 
 </html>

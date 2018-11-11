@@ -1,16 +1,14 @@
-(function() {
+function MediumClaps(config) {
+
+
     "use strict"; // Start of use strict
 
     const mediumUrl = "https://medium.com";
-    const username = "stephannielsen";
-    const useRss = true;
-    const placeholders = {
-        container: $('.claps-container .post').prop('outerHTML'),
-        postLink: '{{postLink}}',
-        postTitle: '{{postTitle}}',
-        authorName: '{{postAuthor}}',
-        postImage: 'https://source.unsplash.com/random/640x480'
-    };
+    const username = config.username;
+    const useRss = config.useRss;
+    const root = config.root;
+    const templateElement = config.placeholders.templateElement;
+    const placeholders = config.placeholders;
 
     const createClapCardsFromRss = () => {
         let parser = new RSSParser();
@@ -21,26 +19,28 @@
             return matches ? "https://cdn-" + matches[1] : undefined;
         };
 
-        $.getJSON("https://allorigins.me/get?url=" + mediumUrl + "/feed/@" + username + "/has-recommended&callback=?", function(data) {
-            parser.parseString(data.contents, function(err, feed) {
-                feed.items.forEach(function(item) {
-                    let imageUrl = getFirstMediumCdnImageInHtml(item['content:encoded']);
-                    imageUrl = imageUrl ? imageUrl : placeholders.postImage;
-                    let post = {
-                        authorName: item.creator,
-                        postImage: imageUrl,
-                        postLink: item.link,
-                        postTitle: item.title
-                    }
-                    let newPost = placeholders.container
-                        .replace(placeholders.postLink, post.postLink)
-                        .replace(placeholders.postTitle, post.postTitle)
-                        .replace(placeholders.authorName, post.authorName)
-                        .replace(placeholders.postImage, post.postImage);
-                    $(newPost).hide().appendTo('.claps-container').show('slow');
-                });
+        fetch("https://allorigins.me/get?url=" + encodeURIComponent(mediumUrl + "/feed/@" + username + "/has-recommended"))
+            .then(response => response.json())
+            .then(data => {
+                parser.parseString(data.contents, function(err, feed) {
+                    feed.items.forEach(function(item) {
+                        let imageUrl = getFirstMediumCdnImageInHtml(item['content:encoded']);
+                        imageUrl = imageUrl ? imageUrl : placeholders.postImage;
+                        let post = {
+                            authorName: item.creator,
+                            postImage: imageUrl,
+                            postLink: item.link,
+                            postTitle: item.title
+                        }
+                        let newPost = placeholders.template
+                            .replace(placeholders.postLink, post.postLink)
+                            .replace(placeholders.postTitle, post.postTitle)
+                            .replace(placeholders.authorName, post.authorName)
+                            .replace(placeholders.postImage, post.postImage);
+                        $(newPost).hide().appendTo(root).show('slow');
+                    });
+                })
             })
-        })
     }
 
     const createClapCardsFromHtml = () => {
@@ -74,21 +74,21 @@
                     postTitle: postInfo.find("h1")[0].innerHTML
                 }
 
-                let newPost = placeholders.container
+                let newPost = placeholders.template
                     .replace(placeholders.postLink, post.postLink)
                     .replace(placeholders.postTitle, post.postTitle)
                     .replace(placeholders.authorName, post.authorName)
                     .replace(placeholders.postImage, post.postImage);
-                $(newPost).hide().appendTo('.claps-container').show('slow');
+                $(newPost).hide().appendTo(root).show('slow');
             });
         });
     }
 
-    // remove the placeholder container
-    $('.claps-container .post').remove();
+    // remove the template element
+    $(templateElement).remove();
     if (useRss) {
         createClapCardsFromRss();
     } else {
         createClapCardsFromHtml();
     }
-})();
+}

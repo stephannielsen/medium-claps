@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var babel = require('gulp-babel');
 var inject = require('gulp-inject');
 var series = require('stream-series');
-var log = require('fancy-log');
 var del = require('del');
 var webserver = require('gulp-webserver');
 var htmlclean = require('gulp-htmlclean');
@@ -22,7 +21,6 @@ var paths = {
     tmpIndex: 'tmp/index.html',
     tmpCSS: 'tmp/*.css',
     tmpJS: 'tmp/*.js',
-    // tmpJQuery: 'tmp/vendor/jquery.js',
     tmpRssParser: 'tmp/vendor/rss-parser.js',
 
     dist: 'dist',
@@ -65,7 +63,6 @@ gulp.task('copy', gulp.series(['clean', 'vendor', 'html', 'css', 'js']));
 
 gulp.task('inject', gulp.series(['copy'], function() {
     var css = gulp.src(paths.tmpCSS, { read: false });
-    // var jquery = gulp.src(paths.tmpJQuery, { read: false });
     var rssParser = gulp.src(paths.tmpRssParser, { read: false });
     var js = gulp.src(paths.tmpJS, { read: false });
     return gulp.src(paths.tmpIndex)

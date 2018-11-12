@@ -11,21 +11,23 @@
 
 <body>
     <div class="root">
-        <div class="claps-container">
-            <a href="{{postLink}}" class="post">
-                <div class="post-container">
-                    <div class="post-details">
-                        <div class="post-image" style="background: linear-gradient(transparent, transparent, transparent, #fff), url(https://source.unsplash.com/random/640x480) no-repeat center/cover;">
-                        </div>
-                        <div class="post-title">
-                            <h2>{{postTitle}}</h2>
-                        </div>
-                        <div class="post-author">
-                            <p>by {{postAuthor}}</p>
+        <div id="claps-container">
+            <template id="post-template">
+                <a href="{{postLink}}" class="post">
+                    <div class="post-container">
+                        <div class="post-details">
+                            <div class="post-image" style="background: linear-gradient(transparent, transparent, transparent, #fff), url({{postImage}}) no-repeat center/cover;">
+                            </div>
+                            <div class="post-title">
+                                <h2>{{postTitle}}</h2>
+                            </div>
+                            <div class="post-author">
+                                <p>by {{postAuthor}}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </template>
         </div>
     </div>
     <!--[htmlclean-protect]-->
@@ -36,17 +38,8 @@
     <!--[/htmlclean-protect]-->
     <script type="text/javascript">
         new MediumClaps({
-            username: 'stephannielsen',
-            useRss: true,
-            root: '.claps-container',
-            placeholders: {
-                templateElement: '.claps-container .post',
-                template: $('.claps-container .post').prop('outerHTML'),
-                postLink: '{{postLink}}',
-                postTitle: '{{postTitle}}',
-                authorName: '{{postAuthor}}',
-                postImage: 'https://source.unsplash.com/random/640x480'
-            }
+            feedUrl: `https://allorigins.me/get?url=${encodeURIComponent('https://medium.com/feed/@stephannielsen/has-recommended')}`,
+            missingImage: 'https://source.unsplash.com/random/640x480',
         });
     </script>
 </body>

@@ -62,14 +62,14 @@ For example:
 
 ```js
 new MediumClaps({
-    feedUrl: `https://allorigins.me/get?url=${encodeURIComponent('https://medium.com/feed/@stephannielsen/has-recommended')}`,
+    feedUrl: `https://api.allorigins.ml/get?url=${encodeURIComponent('https://medium.com/feed/@stephannielsen/has-recommended')}`,
     missingImage: 'https://source.unsplash.com/random/640x480',
 });
 ```
 
 Notes:
 
-* Medium requires CORS, hence the use of [allorigins.me](https://multiverso.me/AllOrigins/) here. You can use whatever service you want here.
+* Medium requires CORS, hence the use of [api.allorigins.ml](https://multiverso.me/AllOrigins/) here. You can use whatever service you want here.
 * Sometimes, a medium post has no image in the RSS feed. In this case, the script uses the image specified via the `missingImage` parameter. Here, a random image from [unsplash](https://unsplash.com).
 
 The script will insert the cards into your `#claps-container` by default. You can specify a different container id as config parameter. You can also use a different template selector via the config.

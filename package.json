@@ -1,6 +1,6 @@
 {
     "name": "medium-claps",
-    "version": "0.9.2",
+    "version": "0.9.3",
     "description": "Fetches clapped articles of a user from Medium and renders them as cards.",
     "main": "medium-claps.js",
     "dependencies": {

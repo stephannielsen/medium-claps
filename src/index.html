@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+      rel="stylesheet"
+    />
+    <link href="medium-claps.css" rel="stylesheet" />
+  </head>
 
-<head>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-    <!--[htmlclean-protect]-->
-    <!-- inject:css -->
-    <!-- endinject -->
-    <!--[/htmlclean-protect]-->
-</head>
-
-<body>
+  <body>
     <div class="root">
-        <div id="claps-container">
-            <template id="post-template">
-                <a href="{{postLink}}" class="post">
-                    <div class="post-container">
-                        <div class="post-details">
-                            <div class="post-image" style="background: linear-gradient(transparent, transparent, transparent, #fff), url({{postImage}}) no-repeat center/cover;">
-                            </div>
-                            <div class="post-title">
-                                <h2>{{postTitle}}</h2>
-                            </div>
-                            <div class="post-author">
-                                <p>by {{postAuthor}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </template>
-        </div>
+      <div id="claps-container">
+        <template id="post-template">
+          <a href="#{{postLink}}" class="post">
+            <div class="post-container">
+              <div class="post-details">
+                <div
+                  class="post-image"
+                  style="background: linear-gradient(transparent, transparent, transparent, #fff), url(#{{postImage}}) no-repeat center/cover;"
+                ></div>
+                <div class="post-title">
+                  <h2>#{{postTitle}}</h2>
+                </div>
+                <div class="post-author">
+                  <p>by #{{postAuthor}}</p>
+                </div>
+              </div>
+            </div>
+          </a>
+        </template>
+      </div>
     </div>
-    <!--[htmlclean-protect]-->
-    <!-- inject:jquery -->
-    <!-- endinject -->
-    <!-- inject:js -->
-    <!-- endinject -->
-    <!--[/htmlclean-protect]-->
-    <script type="text/javascript">
-        new MediumClaps({
-            feedUrl: `https://api.allorigins.ml/get?url=${encodeURIComponent('https://medium.com/feed/@stephannielsen/has-recommended')}`,
-            missingImage: 'https://source.unsplash.com/random/640x480',
-        });
-    </script>
-</body>
-
+    <script src="main.js"></script>
+  </body>
 </html>

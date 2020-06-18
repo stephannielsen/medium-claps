@@ -1,5 +1,7 @@
+import Parser from 'rss-parser';
+
 "use strict"; // Start of use strict
-function MediumClaps(config = {
+export function MediumClaps(config = {
     feedUrl: '',
     root: '#claps-container',
     template: '#post-template',
@@ -26,10 +28,10 @@ function MediumClaps(config = {
     }
 
     const placeholders = {
-        postLink: '{{postLink}}',
-        postTitle: '{{postTitle}}',
-        authorName: '{{postAuthor}}',
-        postImage: '{{postImage}}',
+        postLink: '#{{postLink}}',
+        postTitle: '#{{postTitle}}',
+        authorName: '#{{postAuthor}}',
+        postImage: '#{{postImage}}',
     }
 
     const createElementFromHTML = (htmlString) => {
@@ -47,7 +49,7 @@ function MediumClaps(config = {
     fetch(config.feedUrl)
         .then(response => response.json())
         .then(data => {
-            return new RSSParser().parseString(data.contents);
+            return new Parser().parseString(data.contents);
         })
         .then(feed => {
             for (let item of feed.items) {

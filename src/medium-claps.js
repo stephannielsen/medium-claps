@@ -53,7 +53,7 @@ export function MediumClaps(config = {
         })
         .then(feed => {
             for (let item of feed.items) {
-                let imageUrl = getFirstImageOfPostOrMissingImage(item['content:encoded']);
+                let imageUrl = getFirstImageOfPostOrMissingImage(item['content:encoded'] || item['content']);
 
                 const post = {
                     authorName: item.creator,

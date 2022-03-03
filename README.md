@@ -47,7 +47,7 @@ This is the included default layout:
 
 ### JS
 
-Medium Claps relies on [rss-parser](https://www.npmjs.com/package/rss-parser). The library is bundled with the `medium-claps.js` file in `/dist/`.
+Medium Claps relies on [rss-parser](https://www.npmjs.com/package/rss-parser). Your web app should add `rss-parser` as a dependency directly.
 
 Import `MediumClaps` in your javascript: 
 

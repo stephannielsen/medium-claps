@@ -1,4 +1,5 @@
 import Parser from 'rss-parser';
+import './medium-claps.css';
 
 "use strict"; // Start of use strict
 export function MediumClaps(config = {

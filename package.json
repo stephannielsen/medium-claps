@@ -4,7 +4,7 @@
     "description": "Fetches clapped articles of a user from Medium and renders them as cards.",
     "main": "medium-claps.js",
     "dependencies": {
-        "rss-parser": "^3.8.0"
+        "rss-parser": "^3.12.0"
     },
     "devDependencies": {
         "parcel": "^1.12.4"

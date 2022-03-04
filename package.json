@@ -2,16 +2,27 @@
     "name": "medium-claps",
     "version": "0.9.5",
     "description": "Fetches clapped articles of a user from Medium and renders them as cards.",
-    "main": "medium-claps.js",
+    "source": "src/medium-claps.js",
+    "main": "dist/medium-claps.js",
     "dependencies": {
         "rss-parser": "^3.12.0"
     },
     "devDependencies": {
-        "parcel": "^1.12.4"
+        "buffer": "^6.0.3",
+        "events": "^3.3.0",
+        "https-browserify": "^1.0.0",
+        "parcel": "^2.3.2",
+        "process": "^0.11.10",
+        "querystring-es3": "^0.2.1",
+        "stream-browserify": "^3.0.0",
+        "stream-http": "^3.2.0",
+        "string_decoder": "^1.3.0",
+        "timers-browserify": "^2.0.12",
+        "url": "^0.11.0"
     },
     "scripts": {
         "dev": "parcel ./src/index.html",
-        "build": "parcel build ./src/medium-claps.js ./src/medium-claps.css"
+        "build": "parcel build"
     },
     "keywords": [
         "medium",
